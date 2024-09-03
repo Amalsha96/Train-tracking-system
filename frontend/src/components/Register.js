@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -7,20 +8,26 @@ function Register() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate(); // Hook to navigate to different routes
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      await axios.post('http://localhost:5000/api/auth/register', {
         name,
         email,
         password,
       });
-      setSuccess('Registration successful! Please log in.');
+      setSuccess('Registration successful! Redirecting to login...');
       setName('');
       setEmail('');
       setPassword('');
       setError('');
+
+      // Redirect to the login page after 2 seconds
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (err) {
       setError('Registration failed. Please try again.');
       setSuccess('');
@@ -70,6 +77,12 @@ function Register() {
           Register
         </button>
       </form>
+      <p className="text-center mt-4">
+        Already have an account?{' '}
+        <Link to="/login" className="text-blue-500">
+          Login here
+        </Link>
+      </p>
     </div>
   );
 }
