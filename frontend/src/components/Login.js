@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,8 +15,15 @@ function Login() {
         email,
         password,
       });
-      localStorage.setItem('token', response.data.token);
-      window.location.href = '/'; // Redirect to home page or train locations page
+
+      console.log('Login response:', response.data); // Debugging line
+
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/train-locations'); // Redirect to TrainLocation page
+      } else {
+        setError('Login failed. Please try again.');
+      }
     } catch (err) {
       setError('Invalid credentials. Please try again.');
     }
@@ -55,9 +63,9 @@ function Login() {
       </form>
       <p className="text-center mt-4">
         Don't have an account?{' '}
-        <Link to="/register" className="text-blue-500">
+        <a href="/register" className="text-blue-500">
           Register here
-        </Link>
+        </a>
       </p>
     </div>
   );
