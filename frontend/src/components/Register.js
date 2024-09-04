@@ -35,51 +35,60 @@ function Register() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h2 className="text-2xl font-bold text-center">Register</h2>
-      {error && <div className="text-red-600">{error}</div>}
-      {success && <div className="text-green-600">{success}</div>}
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="p-8 max-w-md mx-auto bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl shadow-lg space-y-6">
+      <h2 className="text-4xl font-extrabold text-center text-blue-900">Register</h2>
+      
+      {error && <div className="text-red-600 text-center font-semibold">{error}</div>}
+      {success && <div className="text-green-600 text-center font-semibold">{success}</div>}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-gray-700">Name:</label>
+          <label className="block text-lg text-gray-700 font-semibold">Name:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter your name"
             required
           />
         </div>
+
         <div>
-          <label className="block text-gray-700">Email:</label>
+          <label className="block text-lg text-gray-700 font-semibold">Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter your email"
             required
           />
         </div>
+
         <div>
-          <label className="block text-gray-700">Password:</label>
+          <label className="block text-lg text-gray-700 font-semibold">Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Enter a strong password"
             required
           />
         </div>
+
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded mt-4"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg text-lg font-semibold transition duration-300"
         >
           Register
         </button>
       </form>
-      <p className="text-center mt-4">
+
+      <p className="text-center mt-4 text-lg">
         Already have an account?{' '}
-        <Link to="/login" className="text-blue-500">
+        <Link to="/login" className="text-blue-500 underline">
           Login here
         </Link>
       </p>
@@ -88,3 +97,4 @@ function Register() {
 }
 
 export default Register;
+

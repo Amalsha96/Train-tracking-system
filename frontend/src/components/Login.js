@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -11,62 +11,73 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Send login request to backend API
       const response = await axios.post('http://localhost:5000/api/auth/login', {
         email,
         password,
       });
-
-      console.log('Login response:', response.data); // Debugging line
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        navigate('/train-locations'); // Redirect to TrainLocation page
-      } else {
-        setError('Login failed. Please try again.');
-      }
+      // Save the token in local storage
+      localStorage.setItem('token', response.data.token);
+      // Redirect to search page after login
+      navigate('/search');
     } catch (err) {
+      // Handle errors such as incorrect credentials
       setError('Invalid credentials. Please try again.');
     }
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h2 className="text-2xl font-bold text-center">Login</h2>
-      {error && <div className="text-red-600">{error}</div>}
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="p-8 max-w-md mx-auto bg-gradient-to-r from-green-100 to-green-200 rounded-xl shadow-lg space-y-6">
+      <h2 className="text-4xl font-extrabold text-center text-green-900">Login</h2>
+      
+      {/* Display error message if login fails */}
+      {error && (
+        <div className="text-center text-red-500 p-2 bg-red-100 rounded">
+          <p>🚫 {error}</p>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-gray-700">Email:</label>
+          <label className="block text-lg text-gray-700 font-semibold">Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+            placeholder="Enter your email"
             required
           />
         </div>
+
         <div>
-          <label className="block text-gray-700">Password:</label>
+          <label className="block text-lg text-gray-700 font-semibold">Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+            placeholder="Enter your password"
             required
           />
         </div>
+
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded mt-4"
+          className="w-full bg-green-600 hover:bg-green-700 text-white p-3 rounded-lg text-lg font-semibold transition duration-300"
         >
           Login
         </button>
       </form>
-      <p className="text-center mt-4">
-        Don't have an account?{' '}
-        <a href="/register" className="text-blue-500">
-          Register here
-        </a>
-      </p>
+
+      <div className="text-center">
+        <p className="mt-6 text-gray-700 text-lg">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-green-600 underline hover:text-green-700">
+            Register here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
