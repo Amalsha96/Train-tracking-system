@@ -1,7 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
-// Swagger definition
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
@@ -21,112 +20,54 @@ const swaggerDefinition = {
   ],
   components: {
     schemas: {
-      // Define the Train schema
       Train: {
         type: 'object',
         properties: {
-          trainId: {
-            type: 'string',
-            description: 'The ID of the train',
-            example: '1176',
-          },
-          route: {
-            type: 'string',
-            description: 'The route of the train',
-            example: 'Colombo to Polgahawela',
-          },
-          departureTime: {
-            type: 'string',
-            description: 'Departure time of the train',
-            example: '06:15 PM',
-          },
-          arrivalTime: {
-            type: 'string',
-            description: 'Arrival time of the train',
-            example: '08:01 PM',
-          },
-          currentLocation: {
-            type: 'string',
-            description: 'Current location of the train',
-            example: 'Gampaha',
-          },
-          lastUpdate: {
-            type: 'string',
-            description: 'Last location update time',
-            example: '07:33 PM',
-          },
+          trainId: { type: 'string', example: '1176' },
+          route: { type: 'string', example: 'Colombo to Polgahawela' },
+          departureTime: { type: 'string', example: '06:15 PM' },
+          arrivalTime: { type: 'string', example: '08:01 PM' },
+          currentLocation: { type: 'string', example: 'Gampaha' },
+          lastUpdate: { type: 'string', example: '07:33 PM' },
           schedule: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                station: {
-                  type: 'string',
-                  description: 'Name of the station',
-                  example: 'Colombo Fort',
-                },
-                arrival: {
-                  type: 'string',
-                  description: 'Arrival time at the station',
-                  example: '06:00 PM',
-                },
-                departure: {
-                  type: 'string',
-                  description: 'Departure time from the station',
-                  example: '06:15 PM',
-                },
+                station: { type: 'string', example: 'Colombo Fort' },
+                arrival: { type: 'string', example: '06:00 PM' },
+                departure: { type: 'string', example: '06:15 PM' },
               },
             },
-            description: 'The schedule of the train, including all stops.',
           },
         },
       },
-      // Define the User schema
       User: {
         type: 'object',
         properties: {
-          name: {
-            type: 'string',
-            description: 'The name of the user',
-            example: 'John Doe',
-          },
-          email: {
-            type: 'string',
-            description: 'The email of the user',
-            example: 'john.doe@example.com',
-          },
-          password: {
-            type: 'string',
-            description: 'The user\'s password',
-            example: 'strongpassword123',
-          },
+          name: { type: 'string', example: 'John Doe' },
+          email: { type: 'string', example: 'john.doe@example.com' },
+          password: { type: 'string', example: 'securepassword123' },
         },
       },
-      // Define authentication token response
       AuthResponse: {
         type: 'object',
         properties: {
-          token: {
-            type: 'string',
-            description: 'JWT token for authentication',
-            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-          },
+          token: { type: 'string', example: 'your-jwt-token' },
         },
       },
     },
   },
 };
 
-// Options for Swagger docs
+// Swagger options
 const options = {
   swaggerDefinition,
-  apis: ['./routes/*.js', './models/*.js'], // Path to the API docs
+  apis: ['./routes/*.js'], // Make sure to point to correct route files
 };
 
-// Initialize SwaggerJSDoc
 const swaggerSpec = swaggerJsDoc(options);
 
-// Function to setup Swagger
 const swaggerSetup = (app) => {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };

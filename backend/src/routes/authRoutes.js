@@ -1,12 +1,12 @@
 const express = require('express');
 const { registerUser, loginUser } = require('../controllers/authController');
-
 const router = express.Router();
+
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: User management
+ *   name: Auth
+ *   description: User authentication
  */
 
 /**
@@ -14,23 +14,16 @@ const router = express.Router();
  * /api/auth/register:
  *   post:
  *     summary: Register a new user
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: User registered
+ *         description: User registered successfully
  *       400:
  *         description: User already exists
  *       500:
@@ -43,27 +36,25 @@ router.post('/register', registerUser);
  * /api/auth/login:
  *   post:
  *     summary: Log in a user
- *     tags: [Users]
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: User logged in and JWT returned
+ *         description: User logged in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AuthResponse'
  *       400:
  *         description: Invalid credentials
  *       500:
  *         description: Server error
  */
-router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 module.exports = router;

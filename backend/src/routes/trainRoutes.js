@@ -18,7 +18,7 @@ const router = express.Router();
  *     tags: [Trains]
  *     responses:
  *       200:
- *         description: List of all train locations
+ *         description: List of trains
  *         content:
  *           application/json:
  *             schema:
@@ -34,7 +34,7 @@ router.get('/', authMiddleware, getTrainLocations);
  * @swagger
  * /api/trains:
  *   post:
- *     summary: Add a new train location
+ *     summary: Add a train location
  *     tags: [Trains]
  *     requestBody:
  *       required: true
@@ -44,7 +44,7 @@ router.get('/', authMiddleware, getTrainLocations);
  *             $ref: '#/components/schemas/Train'
  *     responses:
  *       201:
- *         description: Train location added successfully
+ *         description: Train location added
  *       500:
  *         description: Server error
  */
