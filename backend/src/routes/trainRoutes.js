@@ -5,30 +5,30 @@ const router = express.Router();
 
 /**
  * @swagger
- * tags:
- *   name: Trains
- *   description: Train tracking routes
- */
-
-/**
- * @swagger
- * /api/trains:
+ * /api/trains/{trainId}:
  *   get:
- *     summary: Get all trains
+ *     summary: Get train by trainId
  *     tags: [Trains]
+ *     parameters:
+ *       - in: path
+ *         name: trainId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Train ID
  *     responses:
  *       200:
- *         description: List of trains
+ *         description: Train details
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Train'
+ *               $ref: '#/components/schemas/Train'
+ *       404:
+ *         description: Train not found
  *       500:
  *         description: Server error
  */
-router.get('/', authMiddleware, getTrainLocations);
+router.get('/:trainId', authMiddleware, getTrainLocations);
 
 /**
  * @swagger

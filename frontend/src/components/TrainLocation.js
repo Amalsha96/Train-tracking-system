@@ -1,44 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import trainData from './mockTrainData'; // Assuming your train data is in this file
+import axios from 'axios';
 
 function TrainLocation() {
   const { trainId } = useParams(); // Get trainId from URL
-  const train = trainData.find(t => t.trainId === trainId); // Find train by ID
+  const [train, setTrain] = useState(null);
+  const [error, setError] = useState(null);
 
-  if (!train) {
+  useEffect(() => {
+    const fetchTrainData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/trains/${trainId}`);
+        setTrain(response.data);
+      } catch (err) {
+        setError('Train not found');
+      }
+    };
+
+    fetchTrainData();
+  }, [trainId]);
+
+  if (error) {
     return (
-      <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-lg space-y-4 text-center">
-        <h2 className="text-3xl font-bold text-red-500">Train Location - {trainId}</h2>
-        <p className="text-red-400 text-lg">🚫 Train not found</p>
+      <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+        <h2 className="text-2xl font-bold text-center">Train Location - {trainId}</h2>
+        <p style={{ color: 'red' }}>{error}</p>
       </div>
     );
   }
 
+  if (!train) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div className="p-6 max-w-2xl mx-auto bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl shadow-lg space-y-4">
-      <h2 className="text-4xl font-extrabold text-blue-900 text-center">
-        Train Location - {train.route}
-      </h2>
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <p className="text-2xl text-gray-700 font-semibold">
-          🚉 Current Location: <span className="font-bold">{train.currentLocation}</span>
-        </p>
-        <p className="text-xl text-gray-600">
-          Last Update: <span className="text-gray-800 font-medium">{train.lastUpdate}</span>
-        </p>
-      </div>
-      <h3 className="text-3xl font-bold text-blue-900">Schedule:</h3>
-      <ul className="divide-y divide-blue-200">
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+      <h2 className="text-2xl font-bold text-center">Train Location - {train.route}</h2>
+      <p><span role="img" aria-label="train">🚆</span> Current Location: {train.currentLocation}</p>
+      <p>Last Update: {train.lastUpdate}</p>
+      <h3 className="text-xl font-semibold">Schedule:</h3>
+      <ul>
         {train.schedule.map((stop, index) => (
-          <li key={index} className="p-4 bg-white rounded-lg shadow-sm hover:bg-blue-50 transition-all duration-300">
-            <div className="flex justify-between text-lg">
-              <span className="text-blue-800 font-semibold">{stop.station}</span>
-              <div className="text-gray-600">
-                <span className="text-green-600">Arrival: {stop.arrival}</span> &nbsp;|&nbsp;
-                <span className="text-red-600">Departure: {stop.departure}</span>
-              </div>
-            </div>
+          <li key={index}>
+            {stop.station}: Arrival - {stop.arrival}, Departure - {stop.departure}
           </li>
         ))}
       </ul>
@@ -47,5 +51,3 @@ function TrainLocation() {
 }
 
 export default TrainLocation;
-
-
