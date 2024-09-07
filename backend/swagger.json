@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Train Tracking API",
+      "description": "API to track train information",
+      "contact": {
+        "name": "Your Name",
+        "email": "youremail@example.com"
+      }
+    },
+    "host": "localhost:5000",
+    "basePath": "/api/v1",
+    "schemes": ["http"],
+    "paths": {
+      "/trains/{id}": {
+        "get": {
+          "tags": ["Trains"],
+          "summary": "Get train by ID",
+          "description": "Fetches train information by train ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string",
+              "description": "The train ID"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Train details",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "trainId": { "type": "string" },
+                  "route": { "type": "string" },
+                  "currentLocation": { "type": "string" },
+                  "lastUpdate": { "type": "string" },
+                  "schedule": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "station": { "type": "string" },
+                        "arrival": { "type": "string" },
+                        "departure": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Train not found"
+            }
+          },
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "securityDefinitions": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "name": "X-API-Key",
+        "in": "header",
+        "description": "API Key to access this API"
+      }
+    }
+  }
+  
