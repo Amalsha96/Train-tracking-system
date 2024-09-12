@@ -2,10 +2,10 @@
   "name": "train-tracking-system-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node App.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
+    
   },
   "keywords": [],
   "author": "",
