@@ -9,7 +9,7 @@
         "email": "youremail@example.com"
       }
     },
-    "host": "train-tracking-system-1-600261340998.us-central1.rupn.ap/",
+    "host": "train-tracking-system-1-600261340998.us-central1.run.app/",
     "basePath": "/api/v1",
     "schemes": ["https"],
     "paths": {
