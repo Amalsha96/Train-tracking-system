@@ -9,9 +9,9 @@
         "email": "youremail@example.com"
       }
     },
-    "host": "localhost:5000",
+    "host": "https://train-tracking-system-1-600261340998.us-central1.run.app/",
     "basePath": "/api/v1",
-    "schemes": ["http"],
+    "schemes": ["https"],
     "paths": {
       "/trains/{id}": {
         "get": {
