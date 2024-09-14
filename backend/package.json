@@ -20,5 +20,5 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
-  "proxy": "//train-tracking-system-1-600261340998.us-central1.run.app/"  
+  "proxy": "https://train-tracking-system-1-600261340998.us-central1.run.app"  
 }
